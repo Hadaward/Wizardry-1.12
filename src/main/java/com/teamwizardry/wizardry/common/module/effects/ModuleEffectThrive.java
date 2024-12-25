@@ -19,7 +19,6 @@ import com.teamwizardry.wizardry.client.fx.LibParticles;
 import com.teamwizardry.wizardry.common.block.BlockCraftingPlate;
 import com.teamwizardry.wizardry.common.network.PacketThriveBlock;
 import com.teamwizardry.wizardry.init.ModSounds;
-import com.teamwizardry.wizardry.proxy.CommonProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.IGrowable;
@@ -71,7 +70,7 @@ public class ModuleEffectThrive implements IModuleEffect {
 			if (!spellRing.taxCaster(world, spell, true)) return false;
 
 			((EntityLivingBase) targetEntity).heal((float) potency);
-			world.playSound(null, new BlockPos(pos), ModSounds.HEAL, CommonProxy.SC_Wizardry, 1, 1);
+			world.playSound(null, new BlockPos(pos), ModSounds.HEAL, SoundCategory.NEUTRAL, 1, 1);
 		}
 
 		if (targetPos != null) {
@@ -102,7 +101,7 @@ public class ModuleEffectThrive implements IModuleEffect {
 						block = state.getBlock();
 					}
 					world.immediateBlockTick(targetPos, state, RandUtil.random);
-					world.playSound(null, new BlockPos(pos), ModSounds.HEAL, CommonProxy.SC_Wizardry, 1, 1);
+					world.playSound(null, new BlockPos(pos), ModSounds.HEAL, SoundCategory.NEUTRAL, 1, 1);
 				}
 
 				state = world.getBlockState(otherTargetPos);
@@ -115,7 +114,7 @@ public class ModuleEffectThrive implements IModuleEffect {
 						block = state.getBlock();
 					}
 					world.immediateBlockTick(otherTargetPos, state, RandUtil.random);
-					world.playSound(null, new BlockPos(pos), ModSounds.HEAL, CommonProxy.SC_Wizardry, 1, 1);
+					world.playSound(null, new BlockPos(pos), ModSounds.HEAL, SoundCategory.NEUTRAL, 1, 1);
 				}
 			}
 		}
