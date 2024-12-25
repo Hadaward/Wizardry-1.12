@@ -1,5 +1,4 @@
 # Roadmap v0.12
-In the next version I'm looking to make quality and performance improvements to the mod.
 
 ### Changes
 - [ ] Migrate from LibLib's Config System to Forge's Config System.
