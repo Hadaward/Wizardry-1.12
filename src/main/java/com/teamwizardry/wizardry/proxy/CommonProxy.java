@@ -23,6 +23,7 @@ import com.teamwizardry.wizardry.common.item.ItemBook;
 import com.teamwizardry.wizardry.common.module.effects.ModuleEffectLeap;
 import com.teamwizardry.wizardry.common.module.effects.ModuleEffectTimeSlow;
 import com.teamwizardry.wizardry.common.network.*;
+import com.teamwizardry.wizardry.common.world.trickery.WorldProviderTorikki;
 import com.teamwizardry.wizardry.common.world.underworld.WorldProviderUnderWorld;
 import com.teamwizardry.wizardry.crafting.burnable.FireRecipes;
 import com.teamwizardry.wizardry.crafting.mana.ManaRecipes;
@@ -57,8 +58,7 @@ public class CommonProxy {
 	public void setItemStackHandHandler(EnumHand hand, ItemStack stack) {
 	}
 
-	public static SoundCategory SoundCategory_WizardryGeneral = MODSoundCategory.add(Wizardry.MODID + "_general");
-	public static SoundCategory SoundCategory_WizardryGUI = MODSoundCategory.add(Wizardry.MODID + "_gui");
+	public static SoundCategory SC_Wizardry = MODSoundCategory.add(Wizardry.MODID);
 
 	public void preInit(FMLPreInitializationEvent event) {
 		directory = new File(event.getModConfigurationDirectory(), Wizardry.MODID);
