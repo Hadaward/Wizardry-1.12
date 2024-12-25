@@ -28,10 +28,8 @@ import com.teamwizardry.wizardry.common.network.pearlswapping.PacketRemovePearlF
 import com.teamwizardry.wizardry.common.network.pearlswapping.PacketSuccPearlsToStorageHolder;
 import com.teamwizardry.wizardry.common.network.pearlswapping.PacketSwapPearl;
 import com.teamwizardry.wizardry.init.ModSounds;
-import com.teamwizardry.wizardry.proxy.CommonProxy;
 import kotlin.jvm.functions.Function2;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -249,14 +247,13 @@ public class GuiPearlSwap extends GuiBase {
 				if (newPearlCount != 0)
 					ANIMATOR.add(new ScheduledEventAnimation(10, this::dilateItems));
 			}
-
-			player.world.playSound(player.posX, player.posY, player.posZ, ModSounds.POP, CommonProxy.SoundCategory_WizardryGUI, 1f, 1f, false);
+			player.playSound(ModSounds.POP, 1f, 1f);
 		} else if (newPearlCount != 0 && index != -1) {
 			contractItem(index);
 			ANIMATOR.add(new ScheduledEventAnimation(10, () -> dilateItem(index)));
-			player.world.playSound(player.posX, player.posY, player.posZ, ModSounds.POP, CommonProxy.SoundCategory_WizardryGUI, 1f, 1f, false);
+			player.playSound(ModSounds.POP, 1f, 1f);
 		} else {
-			player.world.playSound(player.posX, player.posY, player.posZ, ModSounds.SPELL_FAIL, CommonProxy.SoundCategory_WizardryGUI, 1f, 1f, false);
+			player.playSound(ModSounds.SPELL_FAIL, 1f, 1f);
 		}
 
 		double centerRad = newPearlCount == 0 ? getGuiHeight() : getGuiHeight() * 0.75;
