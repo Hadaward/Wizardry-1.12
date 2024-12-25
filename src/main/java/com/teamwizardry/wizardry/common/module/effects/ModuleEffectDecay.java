@@ -22,6 +22,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -55,7 +56,7 @@ public class ModuleEffectDecay implements IModuleEffect {
 
 		if (!spellRing.taxCaster(world, spell, true)) return false;
 
-		world.playSound(null, targetPos, ModSounds.SLOW_MOTION_IN, CommonProxy.SoundCategory_WizardryGeneral, 1, RandUtil.nextFloat(0.1f, 0.5f));
+		world.playSound(null, targetPos, ModSounds.SLOW_MOTION_IN, CommonProxy.SC_Wizardry, 1, RandUtil.nextFloat(0.1f, 0.5f));
 
 		if (targetEntity instanceof EntityLivingBase) {
 			EntityLivingBase target = (EntityLivingBase) targetEntity;
