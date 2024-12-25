@@ -19,6 +19,6 @@ In the next version I'm looking to make quality and performance improvements to 
 ### Late Features
 The features listed here are not guaranteed to be added in later 0.12 updates, so don't get your hopes up. They are also subject to change.
 - A new block called ``Autocaster``, lets you put a infused nacre perl to auto cast spells.
- - Needs a new structure to be created
- - May need a new block without official name to serve as aim assist
- - Works with redstone
+   - Needs a new structure to be created
+   - May need a new block without official name to serve as aim assist
+   - Works with redstone
