@@ -57,7 +57,7 @@ public class CommonProxy {
 	public void setItemStackHandHandler(EnumHand hand, ItemStack stack) {
 	}
 
-	public static SoundCategory SoundCategory_WizardryGeneral;
+	public static SoundCategory SoundCategory_WizardryGeneral = SoundCategoryRegistry.register(Wizardry.MODID + "_gen");
 
 	public void preInit(FMLPreInitializationEvent event) {
 		directory = new File(event.getModConfigurationDirectory(), Wizardry.MODID);
@@ -124,8 +124,6 @@ public class CommonProxy {
 	}
 
 	public void init(FMLInitializationEvent event) {
-		SoundCategoryRegistry.register(Wizardry.MODID + "_gen");
-
 		ModStructures.init();
 
 		manaRecipeLoading:
