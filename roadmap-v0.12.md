@@ -1,7 +1,7 @@
 # Roadmap v0.12
 
 ### Changes
-- [ ] Migrate from LibLib's Config System to Forge's Config System.
+- [X] Migrate from LibLib's Config System to Forge's Config System.
   - The motivation for this migration is that currently Forge's configuration system is stable enough to use, and allows for the automated creation of a configuration GUI for the mod.
 - [ ] Adding a volume category to the mod settings so players can have more control over what type of sound should be louder or quieter.
   - Greater sound control will now be offered in several categories: ``Entities``, ``Blocks``, ``Items``, ``User Interface`` and ``Spells``. In addition, the algorithm will now maintain the original volume of the sounds, only acting as a modulator between minimum (0) and maximum (original volume) through the percentage of the slider.
