@@ -1,7 +1,7 @@
 package com.teamwizardry.wizardry.common.world.trickery;
 
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.common.world.biome.BiomeTorikki;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -51,7 +51,7 @@ public class WorldProviderTorikki extends WorldProvider {
 	@Override
 	public void init() {
 		super.init();
-		setDimension(ConfigValues.torikkiID);
+		setDimension(ConfigHandler.server.world.torikkiID);
 	}
 
 	@Override

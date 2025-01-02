@@ -2,7 +2,7 @@ package com.teamwizardry.wizardry.common.core.version;
 
 import com.teamwizardry.librarianlib.core.LibrarianLib;
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.api.util.RandUtil;
 import com.teamwizardry.wizardry.api.util.Utils;
 import net.minecraft.client.Minecraft;
@@ -27,14 +27,14 @@ public final class VersionChecker {
 
 	public static void register() {
 		MinecraftForge.EVENT_BUS.register(VersionChecker.class);
-		if (ConfigValues.versionCheckerEnabled)
+		if (ConfigHandler.server.general.versionCheckerEnabled)
 			new ThreadVersionChecker();
 	}
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public static void onTick(TickEvent.ClientTickEvent event) {
-		if (!ConfigValues.versionCheckerEnabled) return;
+		if (!ConfigHandler.server.general.versionCheckerEnabled) return;
 
 		EntityPlayer player = Minecraft.getMinecraft().player;
 

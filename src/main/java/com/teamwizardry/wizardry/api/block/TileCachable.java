@@ -1,9 +1,9 @@
 package com.teamwizardry.wizardry.api.block;
 
 import com.teamwizardry.librarianlib.features.base.block.tile.TileMod;
-import com.teamwizardry.wizardry.api.ConfigValues;
 import com.teamwizardry.wizardry.api.capability.chunk.WizardryChunk;
 import com.teamwizardry.wizardry.api.capability.chunk.WizardryChunkCapability;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import net.minecraft.tileentity.TileEntity;
 
 import javax.annotation.Nonnull;
@@ -17,8 +17,8 @@ public class TileCachable extends TileMod
 	@Nonnull
 	WeakHashMap<TileEntity, Double> distanceCache = new WeakHashMap<>();
 	
-	private static int LINK_DIST_SQ = ConfigValues.networkLinkDistance * ConfigValues.networkLinkDistance;
-	private static int CHUNK_RANGE = (ConfigValues.networkLinkDistance >> 4) + 1;
+	private static int LINK_DIST_SQ = ConfigHandler.server.world.networkLinkDistance * ConfigHandler.server.world.networkLinkDistance;
+	private static int CHUNK_RANGE = (ConfigHandler.server.world.networkLinkDistance >> 4) + 1;
 	private static int CHUNK_DIST_SQ = CHUNK_RANGE * CHUNK_RANGE;
 
 	@Override

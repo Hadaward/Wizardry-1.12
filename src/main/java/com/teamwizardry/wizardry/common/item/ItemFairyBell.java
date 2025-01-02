@@ -5,9 +5,9 @@ import com.teamwizardry.librarianlib.features.base.item.ItemMod;
 import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
 import com.teamwizardry.librarianlib.features.network.PacketHandler;
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
 import com.teamwizardry.wizardry.api.capability.player.miscdata.IMiscCapability;
 import com.teamwizardry.wizardry.api.capability.player.miscdata.MiscCapabilityProvider;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.api.entity.fairy.FairyData;
 import com.teamwizardry.wizardry.api.util.RayTrace;
 import com.teamwizardry.wizardry.common.entity.EntityFairy;
@@ -186,7 +186,7 @@ public class ItemFairyBell extends ItemMod {
 
 							Vec3d hitVec = rayTraceResult.hitVec;
 							Vec3d subtract = hitVec.subtract(entityFairy.getPositionVector());
-							subtract = new Vec3d(MathHelper.clamp(subtract.x, -ConfigValues.fairyReach, ConfigValues.fairyReach), MathHelper.clamp(subtract.y, -ConfigValues.fairyReach, ConfigValues.fairyReach), MathHelper.clamp(subtract.z, -ConfigValues.fairyReach, ConfigValues.fairyReach));
+							subtract = new Vec3d(MathHelper.clamp(subtract.x, -ConfigHandler.server.entity.fairyReach, ConfigHandler.server.entity.fairyReach), MathHelper.clamp(subtract.y, -ConfigHandler.server.entity.fairyReach, ConfigHandler.server.entity.fairyReach), MathHelper.clamp(subtract.z, -ConfigHandler.server.entity.fairyReach, ConfigHandler.server.entity.fairyReach));
 
 							entityFairy.setLookTarget(subtract);
 
@@ -232,7 +232,7 @@ public class ItemFairyBell extends ItemMod {
 
 						Vec3d hitVec = new Vec3d(pos).add(hitX, hitY, hitZ);
 						Vec3d subtract = hitVec.subtract(entityFairy.getPositionVector());
-						subtract = new Vec3d(MathHelper.clamp(subtract.x, -ConfigValues.fairyReach, ConfigValues.fairyReach), MathHelper.clamp(subtract.y, -ConfigValues.fairyReach, ConfigValues.fairyReach), MathHelper.clamp(subtract.z, -ConfigValues.fairyReach, ConfigValues.fairyReach));
+						subtract = new Vec3d(MathHelper.clamp(subtract.x, -ConfigHandler.server.entity.fairyReach, ConfigHandler.server.entity.fairyReach), MathHelper.clamp(subtract.y, -ConfigHandler.server.entity.fairyReach, ConfigHandler.server.entity.fairyReach), MathHelper.clamp(subtract.z, -ConfigHandler.server.entity.fairyReach, ConfigHandler.server.entity.fairyReach));
 
 						entityFairy.setLookTarget(subtract);
 

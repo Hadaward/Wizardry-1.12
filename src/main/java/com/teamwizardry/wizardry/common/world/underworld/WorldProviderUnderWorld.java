@@ -1,7 +1,7 @@
 package com.teamwizardry.wizardry.common.world.underworld;
 
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.init.ModBiomes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -53,7 +53,7 @@ public class WorldProviderUnderWorld extends WorldProvider {
 	public void init() {
 		super.init();
 		biomeProvider = new BiomeProviderSingle(ModBiomes.BIOME_UNDERWORLD);
-		setDimension(ConfigValues.underworldID);
+		setDimension(ConfigHandler.server.world.underworldID);
 	}
 
 	@Override

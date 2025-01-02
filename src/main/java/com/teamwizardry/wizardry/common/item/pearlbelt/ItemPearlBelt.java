@@ -3,8 +3,8 @@ package com.teamwizardry.wizardry.common.item.pearlbelt;
 import baubles.api.BaubleType;
 import com.teamwizardry.librarianlib.features.base.item.ItemModBauble;
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
 import com.teamwizardry.wizardry.api.capability.item.ProxiedItemStackHandler;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import kotlin.jvm.functions.Function2;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -70,12 +70,12 @@ public class ItemPearlBelt extends ItemModBauble implements IPearlBelt {
 
 	public static class BeltItemHandler extends ProxiedItemStackHandler {
 		public BeltItemHandler(ItemStack stack) {
-			super(stack, ConfigValues.pearlBeltInvSize);
+			super(stack, ConfigHandler.server.item.pearlBeltInvSize);
 		}
 
 		@Override
 		protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
-			return ConfigValues.pearlBeltInvSize;
+			return ConfigHandler.server.item.pearlBeltInvSize;
 		}
 	}
 

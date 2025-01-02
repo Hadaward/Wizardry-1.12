@@ -2,8 +2,8 @@ package com.teamwizardry.wizardry.common.item.halos;
 
 import com.teamwizardry.librarianlib.features.base.item.ItemModArmor;
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
 import com.teamwizardry.wizardry.api.capability.player.mana.ManaManager;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.api.item.halo.IHalo;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -31,9 +31,9 @@ public class ItemCreativeHaloHead extends ItemModArmor implements IHalo {
 		if (worldIn.isRemote) return;
 
 		try (ManaManager.CapManagerBuilder mgr = ManaManager.forObject(entityIn)) {
-			mgr.setMaxMana(ConfigValues.creativeHaloBufferSize);
-			mgr.setMaxBurnout(ConfigValues.creativeHaloBufferSize);
-			mgr.setMana(ConfigValues.creativeHaloBufferSize);
+			mgr.setMaxMana(ConfigHandler.server.item.creativeHaloBufferSize);
+			mgr.setMaxBurnout(ConfigHandler.server.item.creativeHaloBufferSize);
+			mgr.setMana(ConfigHandler.server.item.creativeHaloBufferSize);
 			mgr.setBurnout(0);
 		}
 	}

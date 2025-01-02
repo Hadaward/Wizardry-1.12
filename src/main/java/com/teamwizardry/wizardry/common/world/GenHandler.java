@@ -1,7 +1,7 @@
 package com.teamwizardry.wizardry.common.world;
 
 import com.google.common.primitives.Ints;
-import com.teamwizardry.wizardry.api.ConfigValues;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.api.util.RandUtil;
 import com.teamwizardry.wizardry.common.block.fluid.ModFluids;
 import net.minecraft.util.math.BlockPos;
@@ -30,8 +30,8 @@ public class GenHandler {
 
 	@SubscribeEvent
 	public static void gen(DecorateBiomeEvent.Pre event) {
-		if (ConfigValues.manaPoolRarity > 0)
-			if (ConfigValues.isDimBlacklist ^ Ints.contains(ConfigValues.manaPoolDimWhitelist, event.getWorld().provider.getDimension()))
+		if (ConfigHandler.server.world.manaPoolRarity > 0)
+			if (ConfigHandler.server.world.isDimBlacklist ^ Ints.contains(ConfigHandler.server.world.manaPoolDimWhitelist, event.getWorld().provider.getDimension()))
 				generateMana(event.getWorld(), event.getRand(), event.getChunkPos().x, event.getChunkPos().z);
 	}
 }

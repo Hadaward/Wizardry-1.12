@@ -1,6 +1,6 @@
 package com.teamwizardry.wizardry.api.item.halo;
 
-import com.teamwizardry.wizardry.api.ConfigValues;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.common.item.halos.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,11 +21,11 @@ public interface IHalo {
 		Item halo = stack.getItem();
 
 		if(halo instanceof ItemFakeHaloBauble || halo instanceof ItemFakeHaloHead) {
-			tooltips.add(TextFormatting.YELLOW + "Maximum Mana: " + ConfigValues.crudeHaloBufferSize);
+			tooltips.add(TextFormatting.YELLOW + "Maximum Mana: " + ConfigHandler.server.item.crudeHaloBufferSize);
 		} else if(halo instanceof ItemRealHaloBauble || halo instanceof ItemRealHaloHead) {
-			tooltips.add(TextFormatting.YELLOW + "Maximum Mana: " + ConfigValues.realHaloBufferSize);
+			tooltips.add(TextFormatting.YELLOW + "Maximum Mana: " + ConfigHandler.server.item.realHaloBufferSize);
 		} else if(halo instanceof ItemCreativeHaloBauble || halo instanceof ItemCreativeHaloHead) {
-			tooltips.add(TextFormatting.YELLOW + "Maximum Mana: " + ConfigValues.creativeHaloBufferSize);
+			tooltips.add(TextFormatting.YELLOW + "Maximum Mana: " + ConfigHandler.server.item.creativeHaloBufferSize);
 		} else {
 			tooltips.add(TextFormatting.RED + "Something went wrong! This halo has no tooltip!");
 		}

@@ -1,7 +1,7 @@
 package com.teamwizardry.wizardry.api.item.pearlswapping;
 
 import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
-import com.teamwizardry.wizardry.api.ConfigValues;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.init.ModItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -79,7 +79,7 @@ public interface IPearlStorageHolder {
 		IItemHandler handler = getPearls(holder);
 		if (handler == null) return false;
 
-		if (getPearlCount(holder) > ConfigValues.pearlBeltInvSize) return false;
+		if (getPearlCount(holder) > ConfigHandler.server.item.pearlBeltInvSize) return false;
 
 		ItemHandlerHelper.insertItem(handler, pearl, false);
 
@@ -103,7 +103,7 @@ public interface IPearlStorageHolder {
 		for (ItemStack stack : player.inventory.mainInventory)
 			if (stack.getItem() == ModItems.PEARL_NACRE)
 				if (NBTHelper.getBoolean(stack, "infused", false)) {
-					if (getPearlCount(belt) >= ConfigValues.pearlBeltInvSize) break;
+					if (getPearlCount(belt) >= ConfigHandler.server.item.pearlBeltInvSize) break;
 
 					if (addPearl(belt, stack.copy(), true)) {
 						stack.shrink(1);

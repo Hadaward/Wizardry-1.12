@@ -2,7 +2,7 @@ package com.teamwizardry.wizardry.common.core.version;
 
 import com.teamwizardry.librarianlib.core.LibrarianLib;
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.io.BufferedReader;
@@ -16,7 +16,7 @@ public class ThreadVersionChecker extends Thread {
 	public ThreadVersionChecker() {
 		setName("Wizardry Version Checker Thread");
 		setDaemon(true);
-		if (ConfigValues.versionCheckerEnabled)
+		if (ConfigHandler.server.general.versionCheckerEnabled)
 			start();
 	}
 

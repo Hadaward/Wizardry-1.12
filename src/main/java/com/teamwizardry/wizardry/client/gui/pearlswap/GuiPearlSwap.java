@@ -13,7 +13,7 @@ import com.teamwizardry.librarianlib.features.math.Vec2d;
 import com.teamwizardry.librarianlib.features.network.PacketHandler;
 import com.teamwizardry.librarianlib.features.sprite.Sprite;
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.api.item.BaublesSupport;
 import com.teamwizardry.wizardry.api.item.INacreProduct;
 import com.teamwizardry.wizardry.api.item.pearlswapping.IPearlStorageHolder;
@@ -56,11 +56,11 @@ public class GuiPearlSwap extends GuiBase {
 	 * Background base for spell component icons.
 	 */
 	private static final Sprite spritePlate = new Sprite(new ResourceLocation(Wizardry.MODID, "textures/gui/worktable/plate.png"));
-	public final float[] slotRadii = new float[ConfigValues.pearlBeltInvSize];
-	public final float[] itemDilaters = new float[ConfigValues.pearlBeltInvSize];
+	public final float[] slotRadii = new float[ConfigHandler.server.item.pearlBeltInvSize];
+	public final float[] itemDilaters = new float[ConfigHandler.server.item.pearlBeltInvSize];
 	private final Animator ANIMATOR = new Animator();
-	private final BasicAnimation[] slotRadiusAnimations = new BasicAnimation[ConfigValues.pearlBeltInvSize];
-	private final BasicAnimation[] itemDilationAnimations = new BasicAnimation[ConfigValues.pearlBeltInvSize];
+	private final BasicAnimation[] slotRadiusAnimations = new BasicAnimation[ConfigHandler.server.item.pearlBeltInvSize];
+	private final BasicAnimation[] itemDilationAnimations = new BasicAnimation[ConfigHandler.server.item.pearlBeltInvSize];
 	public double heartBeatRadius = 0.0;
 	public double parasolGradientRadius = 0;
 	public float color = RandUtil.nextFloat();

@@ -2,11 +2,11 @@ package com.teamwizardry.wizardry.crafting.craftingplaterecipes;
 
 import com.teamwizardry.librarianlib.core.client.ClientTickHandler;
 import com.teamwizardry.librarianlib.features.network.PacketHandler;
-import com.teamwizardry.wizardry.api.ConfigValues;
 import com.teamwizardry.wizardry.api.block.ICraftingPlateRecipe;
 import com.teamwizardry.wizardry.api.capability.player.mana.IManaCapability;
 import com.teamwizardry.wizardry.api.capability.player.mana.ManaCapabilityProvider;
 import com.teamwizardry.wizardry.api.capability.player.mana.ManaManager;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.api.item.INacreProduct;
 import com.teamwizardry.wizardry.api.item.ISpellInfusable;
 import com.teamwizardry.wizardry.api.spell.SpellBuilder;
@@ -72,9 +72,9 @@ public class PearlInfusionRecipe implements ICraftingPlateRecipe {
 		double pearlMultiplier = 1;
 		if (input.getItem() instanceof INacreProduct) {
 			float purity = ((INacreProduct) input.getItem()).getQuality(input);
-			if (purity >= 1f) pearlMultiplier = ConfigValues.perfectPearlMultiplier * purity;
-			else if (purity <= ConfigValues.damagedPearlMultiplier)
-				pearlMultiplier = ConfigValues.damagedPearlMultiplier;
+			if (purity >= 1f) pearlMultiplier = ConfigHandler.server.spell.perfectPearlMultiplier * purity;
+			else if (purity <= ConfigHandler.server.spell.damagedPearlMultiplier)
+				pearlMultiplier = ConfigHandler.server.spell.damagedPearlMultiplier;
 			else {
 				double base = purity - 1;
 				pearlMultiplier = 1 - (base * base * base * base);

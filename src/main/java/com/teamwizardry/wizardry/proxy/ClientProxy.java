@@ -3,7 +3,7 @@ package com.teamwizardry.wizardry.proxy;
 import com.teamwizardry.librarianlib.features.methodhandles.MethodHandleHelper;
 import com.teamwizardry.librarianlib.features.utilities.client.CustomBlockMapSprites;
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.client.cosmetics.CapeHandler;
 import com.teamwizardry.wizardry.client.render.item.RenderHaloEntity;
 import com.teamwizardry.wizardry.common.core.version.VersionChecker;
@@ -49,7 +49,7 @@ public class ClientProxy extends CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
 
-		if (ConfigValues.versionCheckerEnabled)
+		if (ConfigHandler.server.general.versionCheckerEnabled)
 			VersionChecker.register();
 
 		ModEntities.initModels();

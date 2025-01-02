@@ -1,39 +1,12 @@
 package com.teamwizardry.wizardry.api.spell.module;
 
-import java.awt.Color;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.io.FileUtils;
-
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import com.teamwizardry.librarianlib.core.LibrarianLib;
 import com.teamwizardry.librarianlib.features.utilities.AnnotationHelper;
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.api.spell.annotation.RegisterModule;
 import com.teamwizardry.wizardry.api.spell.annotation.RegisterOverrideDefaults;
 import com.teamwizardry.wizardry.api.spell.attribute.AttributeModifier;
@@ -43,13 +16,23 @@ import com.teamwizardry.wizardry.api.spell.attribute.AttributeRegistry.Attribute
 import com.teamwizardry.wizardry.api.spell.attribute.Operation;
 import com.teamwizardry.wizardry.api.spell.module.ModuleOverrideHandler.OverrideMethod;
 import com.teamwizardry.wizardry.api.util.DefaultHashMap;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.apache.commons.io.FileUtils;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.awt.*;
+import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * Created by Demoniaque.
@@ -150,13 +133,13 @@ public class ModuleRegistry {
 		for (String fName : files) {
 			File file = new File(directory, fName);
 
-			if (ConfigValues.debugInfo) {
+			if (ConfigHandler.server.general.debugInfo) {
 				Wizardry.LOGGER.info(" | |");
 				Wizardry.LOGGER.info(" | |_ Parsing module configuration " + fName);
 			}
 
 			if (!file.exists()) {
-				if (ConfigValues.debugInfo) {
+				if (ConfigHandler.server.general.debugInfo) {
 					Wizardry.LOGGER.error("| | |_ SOMETHING WENT WRONG! " + file.getName() + " does NOT exist.");
 					Wizardry.LOGGER.error("| |___ Failed to parse " + fName);
 				} else {
@@ -167,7 +150,7 @@ public class ModuleRegistry {
 			}
 
 			if (!file.canRead()) {
-				if (ConfigValues.debugInfo) {
+				if (ConfigHandler.server.general.debugInfo) {
 					Wizardry.LOGGER.error("| | |_ SOMETHING WENT WRONG! Something is preventing me from reading " + file.getName());
 					Wizardry.LOGGER.error("| |___ Failed to parse " + fName);
 				} else {
@@ -185,7 +168,7 @@ public class ModuleRegistry {
 			}
 
 			if (element == null) {
-				if (ConfigValues.debugInfo) {
+				if (ConfigHandler.server.general.debugInfo) {
 					Wizardry.LOGGER.error("| | |_ SOMETHING WENT WRONG! Could not parse " + fName + ". Invalid json.");
 					Wizardry.LOGGER.error("| |___ Failed to parse " + fName);
 				} else {
@@ -196,7 +179,7 @@ public class ModuleRegistry {
 			}
 
 			if (!element.isJsonObject()) {
-				if (ConfigValues.debugInfo) {
+				if (ConfigHandler.server.general.debugInfo) {
 					Wizardry.LOGGER.error("| | |_ SOMETHING WENT WRONG! " + fName + "'s json is NOT a Json Object.");
 					Wizardry.LOGGER.error("| |___ Failed to parse " + fName);
 				} else {
@@ -209,7 +192,7 @@ public class ModuleRegistry {
 
 			// Get Class ID
 			if (!moduleObject.has("reference_module_id") || !moduleObject.get("reference_module_id").isJsonPrimitive()) {
-				if (ConfigValues.debugInfo) {
+				if (ConfigHandler.server.general.debugInfo) {
 					Wizardry.LOGGER.error("| | |_ SOMETHING WENT WRONG! No valid 'reference_module_id' key found in " + file.getName() + ". Unknown module class to use for element.");
 					Wizardry.LOGGER.error("| |___ Failed to parse " + fName);
 				} else {
@@ -222,7 +205,7 @@ public class ModuleRegistry {
 			String moduleClassID = moduleObject.get("reference_module_id").getAsString();
 			ModuleFactory moduleClassFactory = IDtoModuleFactory.get(moduleClassID);
 			if (moduleClassFactory == null) {
-				if (ConfigValues.debugInfo) {
+				if (ConfigHandler.server.general.debugInfo) {
 					Wizardry.LOGGER.error("| | |_ SOMETHING WENT WRONG! Referenced type " + moduleClassID + " is unknown.");
 					Wizardry.LOGGER.error("| |___ Failed to parse " + fName);
 				} else {
@@ -234,7 +217,7 @@ public class ModuleRegistry {
 
 			// Get Name
 			if (!moduleObject.has("sub_module_id") || !moduleObject.get("sub_module_id").isJsonPrimitive()) {
-				if (ConfigValues.debugInfo) {
+				if (ConfigHandler.server.general.debugInfo) {
 					Wizardry.LOGGER.error("| | |_ SOMETHING WENT WRONG! No valid 'sub_module_id' key found in " + file.getName() + ". Unknown name to use for element.");
 					Wizardry.LOGGER.error("| |___ Failed to parse " + fName);
 				} else {
@@ -252,7 +235,7 @@ public class ModuleRegistry {
 			ResourceLocation icon = null;
 			if (moduleObject.has("icon")) {
 				if (!moduleObject.get("icon").isJsonPrimitive()) {
-					if (ConfigValues.debugInfo) {
+					if (ConfigHandler.server.general.debugInfo) {
 						Wizardry.LOGGER.error("| | |_ SOMETHING WENT WRONG! Field 'icon' has an invalid type in " + file.getName() + ". It is expected to be a string.");
 						Wizardry.LOGGER.error("| |___ Failed to register module " + moduleName);
 					} else {
@@ -271,7 +254,7 @@ public class ModuleRegistry {
 			try {
 				if (moduleObject.has("parameters")) {
 					if (!moduleObject.get("parameters").isJsonObject()) {
-						if (ConfigValues.debugInfo) {
+						if (ConfigHandler.server.general.debugInfo) {
 							Wizardry.LOGGER.error("| | |_ SOMETHING WENT WRONG! Field 'parameters' has an invalid type in " + file.getName() + ". It is expected to be an object.");
 							Wizardry.LOGGER.error("| |___ Failed to register module " + moduleName);
 						} else {
@@ -290,7 +273,7 @@ public class ModuleRegistry {
 					while (iter.hasNext()) {
 						Entry<String, Object> pair = iter.next();
 						if (!moduleClassFactory.hasConfigField(pair.getKey())) {
-							if (ConfigValues.debugInfo)
+							if (ConfigHandler.server.general.debugInfo)
 								Wizardry.LOGGER.warn("| | |_ WARNING: Parameter field '" + pair.getKey() + "' is not supported by type '" + moduleClassID + "'. Field is ignored.");
 							else
 								Wizardry.LOGGER.warn("| |_ WARNING: Parameter field '" + pair.getKey() + "' is not supported by type '" + moduleClassID + "'. Field is ignored.");
@@ -304,7 +287,7 @@ public class ModuleRegistry {
 					moduleClass = moduleClassFactory.getInstance();
 				}
 			} catch (ModuleInitException exc) {
-				if (ConfigValues.debugInfo) {
+				if (ConfigHandler.server.general.debugInfo) {
 					Wizardry.LOGGER.error("| | |_ SOMETHING WENT WRONG! " + exc.getMessage());
 					Wizardry.LOGGER.error("| |___ Failed to register module " + moduleName);
 				} else {
@@ -316,7 +299,7 @@ public class ModuleRegistry {
 
 
 			if (!moduleObject.has("item")) {
-				if (ConfigValues.debugInfo) {
+				if (ConfigHandler.server.general.debugInfo) {
 					Wizardry.LOGGER.error("| | |_ SOMETHING WENT WRONG! No 'item' key found in " + file.getName() + ". Unknown item to use for element.");
 					Wizardry.LOGGER.error("| |___ Failed to register module " + moduleName);
 				} else {
@@ -336,7 +319,7 @@ public class ModuleRegistry {
 
 			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(moduleObject.getAsJsonPrimitive("item").getAsString()));
 			if (item == null || item.getRegistryName() == null) {
-				if (ConfigValues.debugInfo) {
+				if (ConfigHandler.server.general.debugInfo) {
 					Wizardry.LOGGER.error("| | |_ SOMETHING WENT WRONG! Item for module " + moduleName + " does not exist '" + moduleObject.getAsJsonPrimitive("item").getAsString() + "'");
 					Wizardry.LOGGER.error("| |___ Failed to register module " + moduleName);
 				} else {
@@ -344,7 +327,7 @@ public class ModuleRegistry {
 					Wizardry.LOGGER.error("|___ Failed to register module " + moduleName);
 				}
 				continue;
-			} else if (ConfigValues.debugInfo) {
+			} else if (ConfigHandler.server.general.debugInfo) {
 				Wizardry.LOGGER.info(" | | |_ Found Item " + item.getRegistryName().toString());
 			}
 
@@ -355,40 +338,40 @@ public class ModuleRegistry {
 				switch (entry.getKey()) {
 					case "meta": {
 						itemMeta = entry.getValue().getAsJsonPrimitive().getAsInt();
-						if (ConfigValues.debugInfo)
+						if (ConfigHandler.server.general.debugInfo)
 							Wizardry.LOGGER.info(" | | |_ Found Item Meta:          " + itemMeta);
 						break;
 					}
 					case "primary_color": {
 						primaryColor = new Color(Integer.parseInt(entry.getValue().getAsJsonPrimitive().getAsString(), 16));
-						if (ConfigValues.debugInfo)
+						if (ConfigHandler.server.general.debugInfo)
 							Wizardry.LOGGER.info(" | | |_ Found Primary Color:      " + primaryColor.getRGB());
 						break;
 					}
 					case "secondary_color": {
 						secondaryColor = new Color(Integer.parseInt(entry.getValue().getAsJsonPrimitive().getAsString(), 16));
-						if (ConfigValues.debugInfo)
+						if (ConfigHandler.server.general.debugInfo)
 							Wizardry.LOGGER.info(" | | |_ Found Secondary Color:    " + secondaryColor.getRGB());
 						break;
 					}
 					case "tags": {
 						JsonArray array = entry.getValue().getAsJsonArray();
 						array.forEach(tag -> tags.add(tag.getAsString()));
-						if (ConfigValues.debugInfo)
+						if (ConfigHandler.server.general.debugInfo)
 							Wizardry.LOGGER.info(" | | |_ Registered " + array.size() + " tags");
 						break;
 					}
 					case "hidden_tags": {
 						JsonArray array = entry.getValue().getAsJsonArray();
 						array.forEach(tag -> hiddenTags.add(tag.getAsString()));
-						if (ConfigValues.debugInfo)
+						if (ConfigHandler.server.general.debugInfo)
 							Wizardry.LOGGER.info(" | | |_ Registered " + array.size() + " hidden tags");
 						break;
 					}
 					default: {
 						Attribute attribute = AttributeRegistry.getAttributeFromName(entry.getKey());
 						if (attribute != null) {
-							if (ConfigValues.debugInfo)
+							if (ConfigHandler.server.general.debugInfo)
 								Wizardry.LOGGER.info(" | | |_ Found base " + attribute.toString() + " values:");
 							JsonObject baseAttrib = entry.getValue().getAsJsonObject();
 
@@ -396,29 +379,29 @@ public class ModuleRegistry {
 							if (baseAttrib.has("min") && baseAttrib.get("min").isJsonPrimitive()) {
 								min = baseAttrib.get("min").getAsInt();
 								if (min < 0) {
-									if (ConfigValues.debugInfo)
+									if (ConfigHandler.server.general.debugInfo)
 										Wizardry.LOGGER.info(" | | | |_ Minimum value for " + attribute.toString() + " was " + min + ", must be a positive integer. Setting to 0");
 									min = 0;
 								}
 
-								if (ConfigValues.debugInfo) Wizardry.LOGGER.info(" | | | |_ Minimum: " + min);
+								if (ConfigHandler.server.general.debugInfo) Wizardry.LOGGER.info(" | | | |_ Minimum: " + min);
 							}
 
 							float max = Integer.MAX_VALUE;
 							if (baseAttrib.has("max") && baseAttrib.get("max").isJsonPrimitive()) {
 								max = baseAttrib.get("max").getAsFloat();
 								if (max < min) {
-									if (ConfigValues.debugInfo)
+									if (ConfigHandler.server.general.debugInfo)
 										Wizardry.LOGGER.info(" | | | |_ Maximum value for " + attribute.toString() + " was " + max + ", must be greater than min. Setting to min, " + min);
 									max = min;
 								}
 								if (max > Integer.MAX_VALUE) {
-									if (ConfigValues.debugInfo)
+									if (ConfigHandler.server.general.debugInfo)
 										Wizardry.LOGGER.info(" | | | |_ Maximum maximum value is " + Integer.MAX_VALUE + ", max was " + max + ". Setting to " + Integer.MAX_VALUE);
 									max = Integer.MAX_VALUE;
 								}
 
-								if (ConfigValues.debugInfo) Wizardry.LOGGER.info(" | | | |_ Maximum: " + max);
+								if (ConfigHandler.server.general.debugInfo) Wizardry.LOGGER.info(" | | | |_ Maximum: " + max);
 
 							}
 
@@ -450,14 +433,14 @@ public class ModuleRegistry {
 							operator = Operation.valueOf(modifier.get("operation").getAsJsonPrimitive().getAsString().toUpperCase());
 						if (modifier.has("amount") && modifier.get("amount").isJsonPrimitive() && modifier.getAsJsonPrimitive("amount").isNumber())
 							amount = modifier.get("amount").getAsFloat();
-						if (ConfigValues.debugInfo)
+						if (ConfigHandler.server.general.debugInfo)
 							Wizardry.LOGGER.info(" | | | |_ Loading AttributeModifier for " + file.getName() + ": " + operator + " -> " + attributeName + ", " + amount);
 						if (attribute != null && operator != null) {
 							module.addAttribute(new AttributeModifier(attribute, amount, operator));
-							if (ConfigValues.debugInfo)
+							if (ConfigHandler.server.general.debugInfo)
 								Wizardry.LOGGER.info(" | | | | |_ AttributeModifier registered successfully");
 						} else {
-							if (ConfigValues.debugInfo)
+							if (ConfigHandler.server.general.debugInfo)
 								Wizardry.LOGGER.error("| | | | |_ Failed to register AttributeModifier!");
 							else Wizardry.LOGGER.error("| | | |_ Failed to register AttributeModifier!");
 						}

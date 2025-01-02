@@ -2,9 +2,9 @@
 package com.teamwizardry.wizardry.common.core;
 
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
 import com.teamwizardry.wizardry.api.NBTConstants.MISC;
 import com.teamwizardry.wizardry.api.block.FluidTracker;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.api.util.PosUtils;
 import com.teamwizardry.wizardry.api.util.TeleportUtil;
 import com.teamwizardry.wizardry.crafting.burnable.EntityBurnableItem;
@@ -92,8 +92,8 @@ public class EventHandler {
 			}
 		}
 		//adds pass to check if player on bedrock after reached velocity
-		if (event.player.getEntityWorld().provider.getDimension() == 0 && ConfigValues.underworldFallSpeed <= 0) {
-			if (event.player.motionY < ConfigValues.underworldFallSpeed || passmap.get(event.player.getEntityId()) != null) {
+		if (event.player.getEntityWorld().provider.getDimension() == 0 && ConfigHandler.server.world.underworldFallSpeed <= 0) {
+			if (event.player.motionY < ConfigHandler.server.world.underworldFallSpeed || passmap.get(event.player.getEntityId()) != null) {
 				passmap.put(event.player.getEntityId(), true);
 				BlockPos location = event.player.getPosition();
 				BlockPos bedrock = PosUtils.checkNeighborBlocksThoroughly(event.player.getEntityWorld(), location, Blocks.BEDROCK);
@@ -102,7 +102,7 @@ public class EventHandler {
 					fallResetter.add(event.player.getUniqueID());
 					TeleportUtil.teleportToDimension(event.player, Wizardry.underWorld.getId(), 0, 300, 0);
 					passmap.remove(event.player.getEntityId());
-				} else if (event.player.motionY > ConfigValues.underworldFallSpeed) {//resets pass if stopped falling or slowed down alot
+				} else if (event.player.motionY > ConfigHandler.server.world.underworldFallSpeed) {//resets pass if stopped falling or slowed down alot
 					passmap.remove(event.player.getEntityId());
 				}
 			}

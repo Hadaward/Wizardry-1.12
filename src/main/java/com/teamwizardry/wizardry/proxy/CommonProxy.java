@@ -4,10 +4,10 @@ import com.teamwizardry.librarianlib.features.gui.provided.book.helper.PageTypes
 import com.teamwizardry.librarianlib.features.gui.provided.book.hierarchy.book.Book;
 import com.teamwizardry.librarianlib.features.network.PacketHandler;
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
 import com.teamwizardry.wizardry.api.arena.ArenaManager;
 import com.teamwizardry.wizardry.api.capability.chunk.WizardryChunkCapability;
 import com.teamwizardry.wizardry.api.capability.world.WizardryWorldCapability;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.api.plugin.PluginContext;
 import com.teamwizardry.wizardry.api.plugin.WizardryPlugin;
 import com.teamwizardry.wizardry.api.spell.ProcessData;
@@ -23,7 +23,6 @@ import com.teamwizardry.wizardry.common.item.ItemBook;
 import com.teamwizardry.wizardry.common.module.effects.ModuleEffectLeap;
 import com.teamwizardry.wizardry.common.module.effects.ModuleEffectTimeSlow;
 import com.teamwizardry.wizardry.common.network.*;
-import com.teamwizardry.wizardry.common.world.trickery.WorldProviderTorikki;
 import com.teamwizardry.wizardry.common.world.underworld.WorldProviderUnderWorld;
 import com.teamwizardry.wizardry.crafting.burnable.FireRecipes;
 import com.teamwizardry.wizardry.crafting.mana.ManaRecipes;
@@ -81,10 +80,10 @@ public class CommonProxy {
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(Wizardry.instance, new GuiHandler());
 
-		Wizardry.underWorld = DimensionType.register("underworld", "_dim", ConfigValues.underworldID, WorldProviderUnderWorld.class, false);
-//		Wizardry.torikki = DimensionType.register("torikki", "_dim", ConfigValues.torikkiID, WorldProviderTorikki.class, false);
-		DimensionManager.registerDimension(ConfigValues.underworldID, Wizardry.underWorld);
-//		DimensionManager.registerDimension(ConfigValues.torikkiID, Wizardry.torikki);
+		Wizardry.underWorld = DimensionType.register("underworld", "_dim", ConfigHandler.server.world.underworldID, WorldProviderUnderWorld.class, false);
+//		Wizardry.torikki = DimensionType.register("torikki", "_dim", ConfigHandler.server.world.torikkiID, WorldProviderTorikki.class, false);
+		DimensionManager.registerDimension(ConfigHandler.server.world.underworldID, Wizardry.underWorld);
+//		DimensionManager.registerDimension(ConfigHandler.server.world.torikkiID, Wizardry.torikki);
 
 		MinecraftForge.EVENT_BUS.register(ArenaManager.INSTANCE);
 		MinecraftForge.EVENT_BUS.register(new WorldProviderUnderWorld());
@@ -132,7 +131,7 @@ public class CommonProxy {
 					break manaRecipeLoading;
 				}
 			}
-			if (ConfigValues.useInternalValues)
+			if (ConfigHandler.server.general.useInternalValues)
 				ManaRecipes.INSTANCE.copyAllRecipes(recipeDirectory);
 			ManaRecipes.INSTANCE.loadRecipes(recipeDirectory);
 		}
@@ -145,7 +144,7 @@ public class CommonProxy {
 					break fireRecipeLoading;
 				}
 			}
-			if (ConfigValues.useInternalValues)
+			if (ConfigHandler.server.general.useInternalValues)
 				FireRecipes.INSTANCE.copyAllRecipes(recipeDirectory);
 			FireRecipes.INSTANCE.loadRecipes(recipeDirectory);
 		}
@@ -161,7 +160,7 @@ public class CommonProxy {
 
 			ModuleRegistry.INSTANCE.loadUnprocessedModules();
 			ModuleRegistry.INSTANCE.loadOverrideDefaults();
-			if (ConfigValues.useInternalValues)
+			if (ConfigHandler.server.general.useInternalValues)
 				ModuleRegistry.INSTANCE.copyAllModules(moduleDirectory);
 			ModuleRegistry.INSTANCE.loadModules(moduleDirectory);
 		}

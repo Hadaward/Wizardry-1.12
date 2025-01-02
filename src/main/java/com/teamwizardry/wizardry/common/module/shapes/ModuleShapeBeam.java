@@ -1,7 +1,7 @@
 package com.teamwizardry.wizardry.common.module.shapes;
 
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.api.spell.IContinuousModule;
 import com.teamwizardry.wizardry.api.spell.SpellData;
 import com.teamwizardry.wizardry.api.spell.SpellRing;
@@ -104,8 +104,8 @@ public class ModuleShapeBeam implements IModuleShape, IContinuousModule {
 		double beamOffset = ticker.ticks + potency;
 		ticker.cast = false;
 
-		if (beamOffset >= ConfigValues.beamTimer) {
-			beamOffset %= ConfigValues.beamTimer;
+		if (beamOffset >= ConfigHandler.server.spell.beamTimer) {
+			beamOffset %= ConfigHandler.server.spell.beamTimer;
 			if (!spellRing.taxCaster(world, spell, true)) {
 				ticker.ticks = beamOffset;
 				return false;

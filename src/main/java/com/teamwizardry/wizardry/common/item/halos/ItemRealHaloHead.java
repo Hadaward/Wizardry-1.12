@@ -2,8 +2,8 @@ package com.teamwizardry.wizardry.common.item.halos;
 
 import com.teamwizardry.librarianlib.features.base.item.ItemModArmor;
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
 import com.teamwizardry.wizardry.api.capability.player.mana.ManaManager;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.api.item.halo.IHalo;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -34,12 +34,12 @@ public class ItemRealHaloHead extends ItemModArmor implements IHalo {
 		double burnout = ManaManager.getBurnout(entityIn);
 
 		ManaManager.forObject(entityIn)
-				.setMaxMana(ConfigValues.realHaloBufferSize)
-				.setMaxBurnout(ConfigValues.realHaloBufferSize)
-				.setMana(mana > ConfigValues.crudeHaloBufferSize ? ConfigValues.crudeHaloBufferSize : mana)
-				.setBurnout(burnout > ConfigValues.crudeHaloBufferSize ? ConfigValues.crudeHaloBufferSize : burnout)
-				.removeBurnout(ManaManager.getMaxBurnout(entityIn) * ConfigValues.haloGenSpeed * 2)
-				.addMana(ManaManager.getMaxMana(entityIn) * ConfigValues.haloGenSpeed)
+				.setMaxMana(ConfigHandler.server.item.realHaloBufferSize)
+				.setMaxBurnout(ConfigHandler.server.item.realHaloBufferSize)
+				.setMana(mana > ConfigHandler.server.item.crudeHaloBufferSize ? ConfigHandler.server.item.crudeHaloBufferSize : mana)
+				.setBurnout(burnout > ConfigHandler.server.item.crudeHaloBufferSize ? ConfigHandler.server.item.crudeHaloBufferSize : burnout)
+				.removeBurnout(ManaManager.getMaxBurnout(entityIn) * ConfigHandler.server.item.haloGenSpeed * 2)
+				.addMana(ManaManager.getMaxMana(entityIn) * ConfigHandler.server.item.haloGenSpeed)
 				.close();
 	}
 

@@ -3,8 +3,8 @@ package com.teamwizardry.wizardry.common.item.halos;
 import baubles.api.BaubleType;
 import com.teamwizardry.librarianlib.features.base.item.ItemModBauble;
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
 import com.teamwizardry.wizardry.api.capability.player.mana.ManaManager;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.api.item.halo.IHalo;
 import com.teamwizardry.wizardry.api.spell.SpellModifierRegistry;
 import com.teamwizardry.wizardry.api.spell.attribute.AttributeModifier;
@@ -42,9 +42,9 @@ public class ItemCreativeHaloBauble extends ItemModBauble implements IHalo {
 		if (player.world.isRemote) return;
 
 		try (ManaManager.CapManagerBuilder mgr = ManaManager.forObject(player)) {
-			mgr.setMaxMana(ConfigValues.creativeHaloBufferSize);
-			mgr.setMaxBurnout(ConfigValues.creativeHaloBufferSize);
-			mgr.setMana(ConfigValues.creativeHaloBufferSize);
+			mgr.setMaxMana(ConfigHandler.server.item.creativeHaloBufferSize);
+			mgr.setMaxBurnout(ConfigHandler.server.item.creativeHaloBufferSize);
+			mgr.setMana(ConfigHandler.server.item.creativeHaloBufferSize);
 			mgr.setBurnout(0);
 		}
 	}

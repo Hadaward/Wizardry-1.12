@@ -2,8 +2,8 @@ package com.teamwizardry.wizardry.common.item.halos;
 
 import baubles.api.BaubleType;
 import com.teamwizardry.librarianlib.features.base.item.ItemModBauble;
-import com.teamwizardry.wizardry.api.ConfigValues;
 import com.teamwizardry.wizardry.api.capability.player.mana.ManaManager;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.api.item.halo.IHalo;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -33,10 +33,10 @@ public class ItemRealHaloBauble extends ItemModBauble implements IHalo {
 		if (player.world.isRemote) return;
 
 		try (ManaManager.CapManagerBuilder mgr = ManaManager.forObject(player)) {
-			mgr.setMaxMana(ConfigValues.realHaloBufferSize);
-			mgr.setMaxBurnout(ConfigValues.realHaloBufferSize);
-			mgr.removeBurnout(mgr.getMaxBurnout() * ConfigValues.haloGenSpeed * 2);
-			mgr.addMana(mgr.getMaxMana() * ConfigValues.haloGenSpeed);
+			mgr.setMaxMana(ConfigHandler.server.item.realHaloBufferSize);
+			mgr.setMaxBurnout(ConfigHandler.server.item.realHaloBufferSize);
+			mgr.removeBurnout(mgr.getMaxBurnout() * ConfigHandler.server.item.haloGenSpeed * 2);
+			mgr.addMana(mgr.getMaxMana() * ConfigHandler.server.item.haloGenSpeed);
 		}
 	}
 

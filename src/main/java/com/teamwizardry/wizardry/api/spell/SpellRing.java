@@ -2,10 +2,10 @@ package com.teamwizardry.wizardry.api.spell;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
 import com.teamwizardry.wizardry.api.capability.player.mana.IManaCapability;
 import com.teamwizardry.wizardry.api.capability.player.mana.ManaCapabilityProvider;
 import com.teamwizardry.wizardry.api.capability.player.mana.ManaManager;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.api.item.BaublesSupport;
 import com.teamwizardry.wizardry.api.spell.attribute.AttributeModifier;
 import com.teamwizardry.wizardry.api.spell.attribute.AttributeRange;
@@ -35,8 +35,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 /**
  * Modules ala IBlockStates. <br />
@@ -389,7 +389,7 @@ public class SpellRing implements INBTSerializable<NBTTagCompound> {
 				// Update the map's entry to the buffed modifier value.
 				informationMap.put(modifier.getAttribute().getNbtName(), newValue);
 
-				if (ConfigValues.debugInfo)
+				if (ConfigHandler.server.general.debugInfo)
 					Wizardry.LOGGER.info(module == null ? "<null module>" : module.getNBTKey() + ": Attribute: " + modifier.getAttribute() + ": " + current + "-> " + newValue);
 			}
 		}

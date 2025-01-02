@@ -3,7 +3,7 @@ package com.teamwizardry.wizardry.common.core.version.manifest;
 import com.google.common.io.Files;
 import com.teamwizardry.librarianlib.core.LibrarianLib;
 import com.teamwizardry.wizardry.Wizardry;
-import com.teamwizardry.wizardry.api.ConfigValues;
+import com.teamwizardry.wizardry.api.config.ConfigHandler;
 import com.teamwizardry.wizardry.crafting.mana.ManaRecipes;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
@@ -141,7 +141,7 @@ public class ManifestHandler {
 
 		try {
 			FileUtils.copyInputStreamToFile(stream, new File(directory + "/" + category + "/", key + ".json"));
-			if (ConfigValues.debugInfo)
+			if (ConfigHandler.server.general.debugInfo)
 				Wizardry.LOGGER.info("    > " + category + " in " + key + " copied successfully from mod jar.");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -186,7 +186,7 @@ public class ManifestHandler {
 			}
 
 			Wizardry.LOGGER.info("    > Found manifest file. Reading...");
-			ManifestUtils.loadManifestFile(externalManifest, externalManifestMap, ConfigValues.debugInfo);
+			ManifestUtils.loadManifestFile(externalManifest, externalManifestMap, ConfigHandler.server.general.debugInfo);
 			Wizardry.LOGGER.info("    >  |____________________________________/");
 
 		} catch (IOException e) {
